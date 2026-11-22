@@ -2,7 +2,7 @@
 
 A hardware and software rework of an agricultural gas monitoring platform, developed in collaboration with **Milvus Consulting** for the *IoT Systems* course at KU Leuven.
 
-[System Architecture](architecture.png) 
+[System Architecture](images/architecture.png) 
 
 ---
 
