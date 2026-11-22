@@ -14,7 +14,7 @@ The original prototype was a standalone ammonia ($NH_3$) meter built on a perfbo
 
 ## Key Features
 
-* **Core Controller:** `ESP32-S3` on a custom 24V DC PCB (with 12V/5V/3.3V rails, hardware watchdog, and LiPo backup for power outage).
+* **Core Controller:** ESP32-S3 on a custom 24V DC PCB (with 12V/5V/3.3V rails, hardware watchdog, and LiPo backup for power outage).
 * **Gas Sensing:** combines an NH3 sensor and a CO2 sensor via RS232-to-UART transceivers.
 * **Active Flow & Thermal Control:**
   * PID-controlled air pump maintaining a constant **1.5 SLPM** flow rate using an $I^2C$ flow sensor.
