@@ -1,5 +1,5 @@
 
-### This directory contains the KiCad design files, schematic documentation (`schematic_kicad.pdf`), and manufacturing files for the  environmental monitoring PCB developed for **Milvus Consulting**.
+### This directory contains the KiCad design files, schematic documentation, and manufacturing files for 2 layer-PCB developed for **Milvus Consulting**.
 
 ![PCB Overview](pcb_preview.png)
 
@@ -7,33 +7,31 @@
 
 ## Repository Contents
 
-* `schematic_kicad.pdf` – Complete 7-page hierarchical schematic exported from KiCad 10.
-* `PCB.kicad_pro` / `PCB.kicad_pcb` – KiCad project and board layout files.
-* `*.kicad_sch` – Hierarchical schematic sheets (`Power_in`, `Power_rails`, `MCU`, `Sensor_serial`, `Sensor_analog&actuators`, `Storage_RTC`).
-* `gerbers/` *(if included)* – Manufacturing and assembly files (Gerber, BOM, CPL).
-
+* `schematic_kicad.pdf` This contains all the 7 hierarcy pages of the schematic
+* KiCad Project
+* `gerbers/` Manufacturing and assembly files (Gerber, Drill)
 ---
 
 ## Hardware Architecture
 
-The board is built around an **ESP32-S3-WROOM-1** microcontroller and is powered by a **24V DC** supply with battery backup, dual switched 3.3V rails, and isolated/protected industrial sensor interfaces.
+The board is built around an **ESP32-S3** microcontroller and is powered by a **24V DC** supply with a rechargable battery backup, dual switched 3.3V rails, and industrial sensor interfaces.
 
-### 1. Power Input (`Power_in.kicad_sch`)
+### 1. Power IN (`Power_in.kicad_sch`)
 * **Input:** 24V DC via screw terminal (`J1`).
-* **Protection:** Resettable PTC fuse (`F1`, `SMD1812B200TF/30`), reverse-polarity Schottky diode (`D1`, `SS34`), and transient voltage suppressor (`D2`, `SMBJ28A`).
-* **Voltage Monitoring:** 100kΩ / 10kΩ voltage divider (`VIN_SENSE`) routed to the ESP32-S3 ADC (`IO1`).
+* **Protection:** Resettable fuse (`F1`, `SMD1812B200TF/30`), reverse-polarity Schottky diode (`D1`, `SS34`), and transient voltage suppressor (`D2`, `SMBJ28A`).
+* **Voltage Monitoring:** 100kΩ / 10kΩ voltage divider (`VIN_SENSE`) to (`IO1`).
 
 ### 2. Power Rails & Battery Management (`Power_rails.kicad_sch`)
 * **24V → 12V Buck Converter:** `TPS542021DDCR` (`U1`) for the heater and auxiliary power.
 * **12V → 5V Buck Converter:** `MCP16301` (`U2`) for the flow sensor and battery charging path.
 * **USB / 5V Power Path & LiPo Backup:** Automatic switching between `VBUS` and `+5V` (`Q1`, `D6`) feeding an `MCP73831-2-OT` (`U3`) charger for a single-cell LiPo battery (`BT1`, `802035`).
-* **3.3V LDO:** `MCP1826S-3302E/EB` (`U4`) regulating `VBAT` to the main `+3.3V` rail.
-* **Switched Power Rails:** Two `TPS22918DBVR` load switches (`U5`, `U6`) allow the MCU to power-cycle or shut down the Arduino MKR NB (`+3.3V_MKR`) and peripheral sensors/SD/RS232 (`+3.3V_SW`) independently.
-* **Diagnostics:** Dedicated Power Good LEDs (`D7`–`D13`) for all 7 rails (`+24V`, `+12V`, `+5V`, `VBUS`, `+3.3V`, `+3.3V_MKR`, `+3.3V_SW`) and auxiliary power headers (`J2`, `J3`).
+* **3.3V ULTRA LOW DROPOUT!:** `MCP1826S-3302E/EB` (`U4`) regulating `VBAT` to the main `+3.3V` rail. With minimal dropout so our single-cell LiPo battery gets used to it's maximum capacity! 
+* **Switched Power Rails:** Two `TPS22918DBVR` load switches (`U5`, `U6`) allow the MCU shut down the Arduino MKR NB (`+3.3V_MKR`) and sensors(`+3.3V_SW`) independently. This is to save power whenever the 24V may be lost and that the battery life can get extended.
+* **Diagnostics:** Dedicated Power LEDs (`D7`–`D13`) for all 7 rails (`+24V`, `+12V`, `+5V`, `VBUS`, `+3.3V`, `+3.3V_MKR`, `+3.3V_SW`).
 
 ### 3. Microcontroller & Reliability (`MCU.kicad_sch`)
 * **MCU:** `ESP32-S3-WROOM-1` (`U8`) with native USB-C programming/debugging (`J4`) and ESD protection (`U7`, `USBLC6-2SC6`).
-* **Hardware Watchdog:** External `TPS3823-33DBV` (`U9`) tied to `EN`, with a manual reset button (`SW2`) and disable jumper (`J5`, `JP_WDT`) for flashing/debugging.
+* **Hardware Watchdog:** External `TPS3823-33DBV` (`U9`) tied to `EN`, with a manual reset button (`SW2`) and disable jumper (`J5`, `JP_WDT`) for flashing/debug options.
 * **Status & Expansion:** Boot button (`SW1`), Status LED (`D15`, green), Error LED (`D14`, red), backup UART programming header (`J6`), and GPIO/I2C expansion header (`J7`).
 
 ### 4. Serial RS232 Sensors (`Sensor_serial.kicad_sch`)
