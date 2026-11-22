@@ -1,9 +1,7 @@
-### Here u can find the files for the PCB
-### Here u can find the files for the PCB
 
-This directory contains the KiCad design files, schematic documentation (`schematic_kicad.pdf`), and manufacturing files for the custom environmental monitoring PCB developed for **Milvus Consulting**.
+### This directory contains the KiCad design files, schematic documentation (`schematic_kicad.pdf`), and manufacturing files for the  environmental monitoring PCB developed for **Milvus Consulting**.
 
-![PCB Overview](images/pcb_preview.png)
+![PCB Overview](pcb_preview.png)
 
 ---
 
