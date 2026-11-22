@@ -1,4 +1,4 @@
-# Agricultural Environmental Monitoring System — Milvus Consulting
+# Agricultural Environmental Monitoring System (Milvus Consulting)
 
 A hardware and software rework of an agricultural gas monitoring platform, developed in collaboration with **Milvus Consulting** for the *IoT Systems* course at KU Leuven.
 
