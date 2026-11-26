@@ -45,7 +45,7 @@ const int SERVER_PORT = 443;
 const char PATH[] = "/update";
 
 // IMPORTANT: Replace with your ThingSpeak Write API Key
-const char WRITE_API_KEY[] = "C5H1BG2UF43SFE2I";
+const char WRITE_API_KEY[] = "writekey";
 
 // NB-IoT objects
 NB nbAccess;
